@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta5
+kind: Config
+build:
+  artifacts:
+    - image: eduk8s-labs-w06-s016-registry.priv-prod-5c0a78f.tanzu-labs.esp.vmware.com/springguides/demo
+      buildpacks:
+        builder: gcr.io/paketo-buildpacks/builder:base-platform-api-0.3
+        dependencies:
+          paths:
+            - pom.xml
+            - src/main
+deploy:
+  kubectl:
+    manifests:
+      - "src/k8s/*"

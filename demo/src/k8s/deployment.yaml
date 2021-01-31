@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demo
+  name: demo
+spec:
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      imagePullSecrets:
+        - name: eduk8s-registry-credentials
+      containers:
+      - image: "eduk8s-labs-w06-s016-registry.priv-prod-5c0a78f.tanzu-labs.esp.vmware.com/springguides/demo"
+        name: demo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: demo
+  name: demo
+spec:
+  ports:
+  - name: 80-8080
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: demo
